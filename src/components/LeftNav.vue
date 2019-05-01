@@ -2,7 +2,7 @@
     <div class="left-nav-wrapper">
         <input type="text">
         <ul class="movie-list">
-            <li v-for= "movie in movies" class="movie-item">
+            <li v-for= "movie in movies" class="movie-item" @click = "movieItemClick(movie.name)">
                 <p>{{movie.name}}</p>
                 <p>{{movie.year}}</p>
             </li>
@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import MovieListingApi from '../services/api/MoviesListing'
 export default {
     name : 'LeftNav',
      data(){
@@ -41,6 +42,14 @@ export default {
                 year : "2010"
             },
         ]}
+    },
+    methods : {
+        movieItemClick(item) {
+            MovieListingApi.getMovie(item).then(res => 
+            {
+                this.$root.$emit('movieItemClick', res)
+            });
+        }
     }
 
 }

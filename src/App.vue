@@ -1,17 +1,19 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
     <left-nav></left-nav>
+    <MainContent></MainContent>
   </div>
 </template>
 
 <script>
-import LeftNav from './components/left-nav.vue'
+import LeftNav from './components/LeftNav.vue'
+import MainContent from './components/MainContent.vue'
 
 export default {
   name: 'app',
   components: {
-    LeftNav
+    LeftNav,
+    MainContent
   }
 }
 </script>
