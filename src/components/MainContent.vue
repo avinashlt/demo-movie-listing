@@ -1,30 +1,47 @@
 <template>
-    <div class="content-wrapper">
-        <h1 class= "movie-title"></h1>
-        <p class="movie-genre"></p>
-        <p class="movie-description"></p>
-        <p class="movie-language">Language : {{description}}</p>
-        <p class="movie-director">Director : {{director}}</p>
-        <p class="movie-actors">Actors : {{}}</p>
-        <p class="movie-duration">Duration : {{}}</p>
+    <div class="content-wrapper" >
+        <div v-if="title">
+        <div class="details-wrapper">
+            <h1 class= "movie-title">{{title}}</h1>
+            <p class="movie-genre">{{genre}}</p>
+            <p class="movie-description">{{description}}</p>
+            <p class="movie-language"><b>Language :</b> {{language}}</p>
+            <p class="movie-director"><b>Director :</b> {{director}}</p>
+            <p class="movie-actors"><b>Actors :</b> {{actors}}</p>
+            <p class="movie-duration"><b>Duration :</b> {{duration}}</p>
+        </div>
+        <div class= "image-wrapper">
+            <img v-bind:src="poster"/>
+        </div>
+        </div>
     </div>
 </template>
 
 <script>
-import MovieListingApi from '../services/api/MoviesListing'
 export default {
     name : "MainContent",
     data(){
         return {
+            title : "",
+            genre : "",
             description : "",
-            director : ""
+            language : "",
+            director : "",
+            actors : "",
+            duration : "",
+            poster : ""
         };
     },
     mounted() {
        this.$root.$on('movieItemClick', (res) => { 
-           this.description = res.Title;
+           this.title = res.Title;
+           this.genre = res.Genre
+           this.description = res.Plot;
+           this.language = res.Language;
            this.director = res.Director;
-        // MovieListingApi.getMovie('123').then(res => this.description = res)
+            this.actors = res.Actors;
+            this.duration = res.Runtime;
+            this.poster = res.Poster;
         })
     }
 }
@@ -36,5 +53,20 @@ export default {
     background: lightblue;
     width: 70%;
     height: 100vh;
+}
+.details-wrapper{
+    width : 60%;
+    float:left;
+    padding:10px;
+}
+
+.image-wrapper {
+    width : 35%;
+    float : left;
+    padding-top:20px
+
+}
+.details-wrapper p, .details-wrapper h1 {
+    text-align : left;
 }
 </style>
